@@ -1,24 +1,26 @@
-import react from 'react';
-import axios from 'axios';
-import './App.css';
-const serverUrl = 'http://localhost:3000/';
-const App: react.FC = () => {
-const [message, setMessage] = react.useState<string|undefined>();
-react.useEffect(() => {
-async function fetchHelloWorld() {
-const response = await axios.get<string>(serverUrl);
-setMessage(response.data);
-}
-fetchHelloWorld();
-}, []);
-return (
-<>
-{
-message === undefined
-? <h2>Loading...</h2>
-: <h2>{message}</h2>
-}
-</>
-);
-}
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './componentes/home';
+import ListaPersonas from './componentes/personas/ListaPersona';
+import ListaAutos from './componentes/autos/ListaAutos';
+import VerPersona from './componentes/personas/VerPersona';
+import VerAuto from './componentes/autos/VerAuto';
+import AgregarPersona from './componentes/personas/AgregarPersona';
+
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/personas" element={<ListaPersonas />} />
+        <Route path="/autos" element={<ListaAutos />} />
+        <Route path="/persona/:id" element={<VerPersona />} />
+        <Route path="/autos/:id" element={<VerAuto />} />
+        <Route path="/agregar" element={<AgregarPersona />} />
+
+      </Routes>
+    </Router>
+  );
+};
+
 export default App;
