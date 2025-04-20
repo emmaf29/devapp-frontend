@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormularioPersona from "./FormularioPersonas";
+import FormularioPersona from "./formularios/FormularioPersonas";
 import apiClient from "../../ApiClient";
 
 const AgregarPersona = () => {
@@ -57,16 +57,28 @@ const AgregarPersona = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate(-1); 
+  };
+
   return (
     <div className="contenedor-formulario">
       <h2>Agregar Persona</h2>
+
       <FormularioPersona
         persona={persona}
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
 
-      {agregada && <p>Persona agregada correctamente.</p>}
+      <div style={{ marginTop: '1rem' }}>
+        <button onClick={handleSubmit}>Agregar</button>
+        <button onClick={handleCancel} style={{ marginLeft: '1rem' }}>
+          Cancelar
+        </button>
+      </div>
+
+      {agregada && <p style={{ color: "green" }}>Persona agregada correctamente.</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

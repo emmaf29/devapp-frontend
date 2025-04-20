@@ -83,7 +83,6 @@ type Props = {
           />
         </label>
         <br />
-        <button type="submit">Agregar</button>
       </form>
     );
   };
