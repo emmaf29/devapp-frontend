@@ -1,34 +1,67 @@
-import React from "react";
-import { Persona } from "../../modelo/Persona";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import apiClient from "../../ApiClient";
-import "./css/EliminarPersona.css"
+import { Persona } from "../../modelo/Persona";
+import "./css/EliminarPersona.css";
 
-interface EliminarPersonaProps { 
-  persona: Persona;
-  onCancel: () => void;
-  onDeleted: (idEliminado: number) => void;
-}
+const EliminarPersona = () => {
+  const { id } = useParams();
+  const [persona, setPersona] = useState<Persona | null>(null);
+  const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
-const EliminarPersona: React.FC<EliminarPersonaProps> = ({ persona, onCancel, onDeleted }) => {
-  
-    const handleConfirmar = async () => {
+  useEffect(() => {
+    const obtenerPersona = async () => {
+      try {
+        const response = await apiClient.get(`/personas/${id}`);
+        setPersona(response.data as Persona);
+      } catch (err) {
+        console.error("Error al obtener la persona:", err);
+        setError("No se pudo obtener la persona.");
+      }
+    };
+
+    if (id) {
+      obtenerPersona();
+    }
+  }, [id]);
+
+
+  const handleConfirmar = async () => {
     try {
-      await apiClient.delete(`/persona/${persona.id}`);
-      onDeleted(persona.id);
-    } catch (error) {
-      console.error("Error al eliminar persona", error);
+      await apiClient.delete(`/persona/${id}`);
+      navigate("/personas");
+    } 
+     catch (err) {
+      console.error("Error al eliminar la persona:", err);
+      setError("No se pudo eliminar la persona.");
     }
   };
 
+  const handleCancelar = () => {
+    navigate(`/persona/${id}`);
+  };
+
   return (
-    <div className="popup-overlay">
-      <div className="popup-content">
-        <p>¿Seguro que querés borrar a <strong>{persona.nombre}</strong>?</p>
-        <div className="popup-buttons">
-          <button className="btn-cancelar" onClick={onCancel}>Cancelar</button>
-          <button className="btn-confirmar" onClick={handleConfirmar}>Confirmar</button>
+    <div className="pagina-eliminar">
+      {error && <p className="error">{error}</p>}
+      {persona ? (
+        <div className="contenido-eliminar">
+          <p>
+            ¿Seguro que queres borrar a {persona.nombre}?
+          </p>
+          <div className="botones">
+            <button className="btn-cancelar" onClick={handleCancelar}>
+              Cancelar
+            </button>
+            <button className="btn-confirmar" onClick={handleConfirmar}>
+              Confirmar
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p>Cargando...</p>
+      )}
     </div>
   );
 };

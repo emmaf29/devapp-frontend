@@ -6,6 +6,7 @@ import VerPersona from './componentes/personas/VerPersona';
 import VerAuto from './componentes/autos/VerAuto';
 import AgregarPersona from './componentes/personas/AgregarPersona';
 import EditarPersona from './componentes/personas/EditarPersona';
+import EliminarPersona from './componentes/personas/EliminarPersona';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/autos/:id" element={<VerAuto />} />
         <Route path="/agregar" element={<AgregarPersona />} />
         <Route path="/persona/:id/editar" element={<EditarPersona />} />
+        <Route path="/persona/:id/borrar" element={<EliminarPersona />} />
 
       </Routes>
     </Router>

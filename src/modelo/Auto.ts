@@ -1,5 +1,6 @@
 export interface Auto {
-    id: number;
+    idAuto: number;
+    idDuenio: number;
     marca: string;
     modelo: string;
     anio: number;
@@ -7,4 +8,5 @@ export interface Auto {
     color: string;
     numeroDeChasis: string;
     motor: string;
-}
+  }
+  

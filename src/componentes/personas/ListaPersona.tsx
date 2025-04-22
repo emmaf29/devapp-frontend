@@ -3,13 +3,11 @@ import apiClient from "../../ApiClient";
 import { Persona } from "../../modelo/Persona";
 import "../personas/css/ListaPersonas.css";
 import { useNavigate } from "react-router-dom";
-import EliminarPersona from "./EliminarPersona";
 import AccionesPersona from "./AccionesPersonas";
 
 const ListaPersonas = () => {
   const [personas, setPersonas] = useState<Persona[]>([]);
   const [error, setError] = useState<string>("");
-  const [personaABorrar, setPersonaABorrar] = useState<Persona | null>(null);
   const navigate = useNavigate();
 
   const obtenerPersonas = async () => {
@@ -25,16 +23,17 @@ const ListaPersonas = () => {
     obtenerPersonas();
   }, []);
 
-
   const handleVerPersona = (id: number) => {
     navigate(`/persona/${id}`);
   };
-
-  const handlePersonaEliminada = (idEliminado: number) => {
-    setPersonas(prev => prev.filter(p => p.id !== idEliminado));
-    setPersonaABorrar(null);
+  
+  const handleEditarPersona = (id: number) => {
+    navigate(`/persona/${id}/editar`);
   };
-
+  
+  const handleBorrarPersona = (id: number) => {
+    navigate(`/persona/${id}/borrar`);
+  };
 
   return (
     <div className="contenedor-personas">
@@ -67,21 +66,14 @@ const ListaPersonas = () => {
                 <AccionesPersona
                 persona={persona}
                 onVer={handleVerPersona}
-                onBorrar={setPersonaABorrar}
-                />
-              </td>
+                onEditar={handleEditarPersona}
+                onBorrar={handleBorrarPersona}
+                 />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      )}
-
-      {personaABorrar && (
-        <EliminarPersona
-          persona={personaABorrar}
-          onCancel={() => setPersonaABorrar(null)}
-          onDeleted={handlePersonaEliminada}
-        />
       )}
     </div>
   );
