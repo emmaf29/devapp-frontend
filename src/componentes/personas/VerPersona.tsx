@@ -46,12 +46,9 @@ const VerPersona = () => {
           </div>
 
           <h3 className="titulo-autos">Autos</h3>
-          <button
-            className="boton-agregar-auto"
-            onClick={() => navigate(``)}
-          >
-            Agregar nuevo
-          </button>
+          <button className="btn-agregar" onClick={() => navigate("/agregarAuto")}>
+        Agregar nueva
+      </button>
 
           <table className="tabla-autos">
             <thead>

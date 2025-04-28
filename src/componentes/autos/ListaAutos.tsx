@@ -47,15 +47,15 @@ const ListaAutos = () => {
         </thead>
         <tbody>
           {autos.map((auto) => (
-            <tr key={auto.idDuenio}>
+            <tr key={auto.id}>
               <td>{auto.patente}</td>
               <td>{auto.marca}</td>
               <td>{auto.modelo}</td>
               <td>{auto.anio}</td>
               <td>
-                <button className="btn-ver" onClick={() => handleVerAuto(auto.idDuenio)}>Ver</button>
-                <button className="btn-editar">Editar</button>
-                <button className="btn-borrar">Borrar</button>
+                <button className="btn-ver" onClick={() => handleVerAuto(auto.id)}>Ver</button>
+                <button className="btn-editar" onClick={() => navigate(`/autos/editar/${auto.id}`)}>Editar </button>
+                <button className="btn-borrar" onClick={() => navigate(`/autos/${auto.id}/borrar`)}>Borrar</button>
               </td>
             </tr>
           ))}
